@@ -1,36 +1,39 @@
 {
-  "name": "cms",
+  "name": "client",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:3001/",
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.34",
-    "@fortawesome/free-brands-svg-icons": "^5.15.2",
-    "@fortawesome/free-regular-svg-icons": "^5.15.2",
-    "@fortawesome/free-solid-svg-icons": "^5.15.2",
-    "@fortawesome/react-fontawesome": "^0.1.14",
-    "axios": "^0.18.0",
-    "concurrently": "^5.3.0",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
     "http-proxy-middleware": "^1.0.6",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-router-dom": "^4.3.1",
-    "react-scripts": "3.4.3",
-    "redux": "^4.0.5"
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-scripts": "4.0.1",
+    "web-vitals": "^0.2.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ],
-  "devDependencies": {
-    "nodemon": "^2.0.7"
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
