@@ -1,13 +1,15 @@
 const path = require("path");
-const router = require("express").Router();
-const apiRoutes = require("./api");
+var express= require("express")
+var router = express.Router();
+const MongoClient = require('mongodb').MongoClient;
+const mongoose = require("mongoose");
+var connection = require("../models")
 
-// API Routes
-router.use("/api", apiRoutes);
+router.get('/api/plants',function (request,response) {
+ connection.then(client=> client.db('plantwebsite').collection('plants').find({}).toArray(function(err, docs) {
+    if(err) { console.error(err) }
+    response.send(JSON.stringify(docs))
+})) 
+  })
 
-// If no API routes are hit, send the React app
-router.use(function(req, res) {
-  res.sendFile(path.join(__dirname, "../client/build/index.html"));
-});
-
-module.exports = router;
+  module.exports = router;
