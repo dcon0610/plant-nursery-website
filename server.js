@@ -18,22 +18,27 @@ app.use(express.json());
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
   app.get('/api/plants',(request,response) => {
-   
-    response.json({plants: "Hello"})
-       
+    MongoClient.connect(process.env.MONGODB_URI, function(err, database){
+    console.log("connected with this!")
+    const database1 = database.db('plantwebsite')
+    const json = database1.collection('plants').find({}).toArray(function(err, str){
+    
+      if (err) throw err;
+    
+    response.json({plants: str})
+        database.close();
     })
     
     
     
     
     
-    }
-  
-
+    })
+    })
+}
 else {
-  test = "mongodb+srv://dcon:Cwoodfc2010@cluster0.0fmfp.mongodb.net/plantwebsite?retryWrites=true&w=majority"
   app.get('/api/plants',(request,response) => {
-    MongoClient.connect(test, function(err, database){
+    MongoClient.connect("mongodb://localhost/plantwebsite", function(err, database){
     console.log("connected with this!")
     const database1 = database.db('plantwebsite')
     const json = database1.collection('plants').find({}).toArray(function(err, str){
