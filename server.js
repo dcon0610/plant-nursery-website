@@ -27,9 +27,9 @@ if (process.env.NODE_ENV === "production") {
     
     
     
-    })
-    })
-}
+    }
+  
+
 else {
   test = "mongodb+srv://dcon:Cwoodfc2010@cluster0.0fmfp.mongodb.net/plantwebsite?retryWrites=true&w=majority"
   app.get('/api/plants',(request,response) => {
