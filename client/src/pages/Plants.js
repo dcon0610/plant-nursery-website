@@ -12,6 +12,7 @@ const Plants = () => {
     API.getPlants()
       .then(results => {
       console.log("these are the results,",results.data)
+      
  
         });
 
