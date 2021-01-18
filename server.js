@@ -18,15 +18,9 @@ app.use(express.json());
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
   app.get('/api/plants',(request,response) => {
-    MongoClient.connect("process.env.MONGODB_URI", function(err, database){
-    console.log("connected with this!")
-    const database1 = database.db('plantwebsite')
-    const json = database1.collection('plants').find({}).toArray(function(err, str){
-    
-      if (err) throw err;
-    
-    response.json({plants: str})
-        database.close();
+   
+    response.json({plants: "Hello"})
+       
     })
     
     
