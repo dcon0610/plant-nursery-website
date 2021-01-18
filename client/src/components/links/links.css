@@ -1,0 +1,8 @@
+.height {
+    height: 50vh;
+    margin-top: 10vh;
+    margin-bottom: auto;
+   
+    object-fit: cover
+}
+

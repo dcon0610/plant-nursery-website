@@ -13,9 +13,22 @@
   "author": "david",
   "license": "MIT",
   "dependencies": {
+    "@emotion/babel-preset-css-prop": "^11.0.0",
+    "@emotion/core": "^11.0.0",
+    "@emotion/react": "^11.1.4",
+    "@fortawesome/fontawesome-svg-core": "^1.2.34",
+    "@fortawesome/free-brands-svg-icons": "^5.15.2",
+    "@fortawesome/free-regular-svg-icons": "^5.15.2",
+    "@fortawesome/free-solid-svg-icons": "^5.15.2",
+    "@fortawesome/react-fontawesome": "^0.1.14",
     "concurrently": "^5.3.0",
     "express": "^4.17.1",
     "mongoose": "^5.11.12",
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "react-slick": "^0.27.14",
+    "react-slideshow-image": "^3.4.3"
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-react-jsx": "^7.12.12"
   }
 }

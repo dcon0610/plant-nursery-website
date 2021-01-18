@@ -1,0 +1,12 @@
+.card-img-top {
+display: block;
+margin-left: auto;
+margin-right: auto;
+width: 50%;
+height: 20vh;
+object-fit: cover;
+}
+
+.card {
+    border: none
+}
