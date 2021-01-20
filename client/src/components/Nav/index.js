@@ -7,7 +7,7 @@ function Nav() {
   return (
     <nav className="navbar sticky-top py-0 navbar-expand-md navbar-dark navbarspecial">
     <Link className="navbar-brand" to="/"> <h3>
-  <img src="tree.jpg" height="70" width="70" alt="" className="navimage"></img>
+  <img src="/tree.jpg" height="70" width="70" alt="" className="navimage"></img>
   Green Hills Nursery 
   </h3></Link>
     

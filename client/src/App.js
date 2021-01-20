@@ -10,6 +10,7 @@ import Seeds from "./pages/Seeds";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Cart from "./pages/Cart";
+import IndividualPlant from "./pages/IndividualPlant";
 import { StoreProvider } from "./utils/GlobalState";
 
 
@@ -36,6 +37,7 @@ function App() {
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/cart" component={Cart} />
+            <Route exact path="/plants/:id" component={IndividualPlant} />
           </Switch>
           </StoreProvider>
           
