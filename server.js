@@ -1,26 +1,30 @@
-
-
 const express = require("express");
+
+const mongoose = require("mongoose");
+const routes = require("./routes");
 const app = express();
 const PORT = process.env.PORT || 5000;
-let resultsArray=[]
-
-
 
 // Define middleware here
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 // Serve up static assets (usually on heroku)
-;
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
-else {
- 
-}
 // Add routes, both API and view
-var routes = require("./routes");
-app.use(routes)
+app.use(routes);
+
+// Connect to the Mongo DB
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/plantwebsite", 
+  {
+    useNewUrlParser: true
+   }).then(() => {
+       console.log("Successfully connected to the database");    
+   }).catch(err => {
+       console.log('Could not connect to the database. Exiting now...', err);
+       process.exit();
+   });
 
 
 // Start the API server

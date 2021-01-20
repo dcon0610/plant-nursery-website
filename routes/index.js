@@ -1,15 +1,10 @@
-const path = require("path");
+
 var express= require("express")
 var router = express.Router();
-const MongoClient = require('mongodb').MongoClient;
-const mongoose = require("mongoose");
-var connection = require("../models")
+const getPlants = require('../controllers');
 
-router.get('/api/plants',function (request,response) {
- connection.then(client=> client.db('plantwebsite').collection('plants').find({}).toArray(function(err, docs) {
-    if(err) { console.error(err) }
-    response.send(JSON.stringify(docs))
-})) 
-  })
+router.get('/api/plants',getPlants.findAll)
+router.get('/api/plants/one',getPlants.findOne)
 
-  module.exports = router;
+
+module.exports = router;

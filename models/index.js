@@ -1,7 +1,14 @@
-const MongoClient = require('mongodb').MongoClient;
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
+// define User Schema
+const plant = new Schema({
+     name: {type: String, required: true},
+   height : {type: Number, required: true},
+});
 
-connection = MongoClient.connect(process.env.MONGODB_URI ||"mongodb://localhost/plantwebsite")
+// define model
+const plants = mongoose.model("plants", plant);
 
-
-module.exports = connection
+// export
+module.exports = plants;
