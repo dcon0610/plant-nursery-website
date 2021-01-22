@@ -6,7 +6,7 @@ import "./carddata.css"
 
 function CardData(props) {
 
-console.log("these are the props", props)
+
   return (
 <div className="col-4">
 <Link to={{pathname: `/${props.route}`, imageUrl: props.url}} >

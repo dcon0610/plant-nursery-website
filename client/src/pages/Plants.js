@@ -1,10 +1,11 @@
 
 import API from "../utils/API";
 import React, { useEffect, Component } from "react";
-import { useStoreContext } from "../utils/GlobalState";
-import { REMOVE_POST, UPDATE_POSTS, LOADING } from "../utils/actions";
 import CardData from "../components/CardData";
-
+import { loginUser } from "./../actions/authActions";
+import PropTypes from "prop-types";
+import classnames from "classnames"
+import { connect } from "react-redux";
 
 class Plants extends Component {
 constructor() {
@@ -12,6 +13,7 @@ constructor() {
   this.state = {plantList: []}
 }
 componentDidMount() {
+  console.log("these are the props", this.props)
   API.getPlants()
   .then(results => {
     console.log(results.data)
@@ -44,5 +46,16 @@ componentDidMount() {
 
   }
 };
-
-export default Plants;
+Plants.propTypes = {
+  loginUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
+export default connect(
+  mapStateToProps,
+  { loginUser }
+)(Plants);
