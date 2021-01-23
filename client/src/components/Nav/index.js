@@ -1,19 +1,41 @@
 import API from "./../../utils/API";
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import React, {Component} from "react";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import "./Nav.css"
 import { connect } from "react-redux";
-import { loginUser } from "./../../actions/authActions";
-import PropTypes from "prop-types"
+import { loginUser, logoutUser } from "./../../actions/authActions";
+import PropTypes from "prop-types";
+import Popup from "reactjs-popup";
 
 
 class Nav extends Component {
   constructor() {
     super();
-    this.state = {cartLength: 0}
+    this.state = {}
   }
 
-  
+// this.props.logoutUser()
+logout =() => {
+  confirmAlert({
+    title: ' Logout',
+    message: 'Press yes to continue, no to return.',
+    buttons: [
+      {
+        label: 'Yes',
+        onClick: () => this.props.logoutUser()
+      },
+      {
+        label: 'No',
+        onClick: () => {return}
+      }
+    ]
+  });
+};
+
+
+
  
 render() {
   return (
@@ -43,6 +65,9 @@ render() {
             <li className="nav-item">
                 <Link className="nav-link" to="/register">Register</Link>
             </li>
+            <li className="nav-item">
+                <Link className="nav-link" onClick={this.logout}>Logout</Link>
+            </li>
         </ul>
         
     </div>
@@ -62,5 +87,5 @@ const mapStateToProps = state => ({
 });
 export default connect(
   mapStateToProps,
-  { loginUser }
+  { loginUser, logoutUser }
 )(Nav);

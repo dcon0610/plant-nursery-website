@@ -35,6 +35,7 @@ componentDidMount() {
         name = {plant.name}
         height = {plant.height}
         url = {`/${plant.url}`}
+        cost = {plant.cost}
           />
     ))}
   

@@ -5,7 +5,8 @@ import {
   GET_ERRORS,
   SET_CURRENT_USER,
   USER_LOADING, 
-  UPDATE_CART
+  UPDATE_CART,
+  REVISE_CART
 } from "./types";
 import API from "../utils/API";
 // Register User
@@ -21,7 +22,6 @@ export const registerUser = (userData, history) => dispatch => {
 };
 
 export const updateCart = (userId) => dispatch => {
-
   API.getUser({user: userId})
   .then(result => {
   console.log(result)
@@ -35,6 +35,24 @@ export const updateCart = (userId) => dispatch => {
   })
 })
 }
+
+export const reviseCart = (userId,index ) => dispatch => {
+  console.log("this is the user Id",userId)
+  API.reviseCart({user: userId, index: index})
+  .then(result => {
+   console.log(result)
+ var cart = JSON.stringify(result.data.cart)
+  localStorage.setItem("cartContents", cart)
+  cart = JSON.parse(cart)
+  console.log("updatedcart", cart)
+  dispatch({
+  type: REVISE_CART,
+  cart: cart 
+  })
+})
+}
+
+
 
 
 // Login - get user token
@@ -92,8 +110,13 @@ export const setUserLoading = () => {
 export const logoutUser = () => dispatch => {
   // Remove token from local storage
   localStorage.removeItem("jwtToken");
+  localStorage.removeItem("cartContents")
+  localStorage.removeItem("loginStatus")
   // Remove auth header for future requests
   setAuthToken(false);
+  var decoded=''
+  var cart=[]
+  var status="You are not logged in"
   // Set current user to empty object {} which will set isAuthenticated to false
-  dispatch(setCurrentUser({}));
+  dispatch(setCurrentUser(decoded, status, cart));
 };

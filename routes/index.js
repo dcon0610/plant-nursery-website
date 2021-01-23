@@ -92,6 +92,8 @@ router.post("/api/users/login", (req, res) => {
 
   router.post("/api/plants/getuser",getPlants.findOneUser)
 
+  router.post("/api/plants/removefromcart",getPlants.reviseCart)
+
  
 
 module.exports = router;

@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 const plant = new Schema({
      name: {type: String, required: true},
    height : {type: Number, required: true},
+   cost: {type: Number, required: true}
 });
 
 // define model

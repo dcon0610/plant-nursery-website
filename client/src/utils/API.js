@@ -23,6 +23,10 @@ export default {
     return axios.post("/api/users/login", userdata)
   },
 
+  reviseCart: function(userdata, index) {
+    return axios.post("/api/plants/removefromcart", userdata)
+  }
+
   // // Gets the post with the given id
   // getPost: function(id) {
   //   return axios.get("/api/posts/" + id);

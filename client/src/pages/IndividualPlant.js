@@ -45,7 +45,8 @@ class IndividualPlant extends React.Component {
         API.addToCart({
             user: this.props.auth.decoded.id,
             name: this.props.match.params.id,
-            number: this.state.quantity
+            number: this.state.quantity,
+            cost: this.props.location.data.cost
         }).then(results => {
             console.log(results)
             this.props.updateCart(this.props.auth.decoded.id)
@@ -64,7 +65,7 @@ console.log(this.props.location.imageUrl)
   <div className="card">
         <div className="row no-gutters">
             <div className="col-auto">
-                <img style={{width: "50vh", height: "50vh"}} src={this.props.location.imageUrl} className="img-fluid" alt=""></img>
+                <img style={{width: "50vh", height: "50vh"}} src={this.props.location.data.imageUrl} className="img-fluid" alt=""></img>
             </div>
             <div className="col">
                 <div className="card-block px-2">
