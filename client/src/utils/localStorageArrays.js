@@ -10,7 +10,7 @@ export default Storage.prototype.getArray = function(arrayName) {
     return thisArray;
   }
   
-  export default Storage.prototype.pushArrayItem = function(arrayName,arrayItem) {
+export default Storage.prototype.pushArrayItem = function(arrayName,arrayItem) {
     var existingArray = this.getArray(arrayName);
     existingArray.push(arrayItem);
     this.setItem(arrayName,JSON.stringify(existingArray));

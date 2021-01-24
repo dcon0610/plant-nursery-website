@@ -1,7 +1,8 @@
 import {
     SET_CURRENT_USER,
     USER_LOADING,
-    UPDATE_CART
+    UPDATE_CART,
+    REVISE_CART
   } from "../actions/types";
   const isEmpty = require("is-empty");
   const initialState = {
@@ -30,6 +31,13 @@ import {
         };
 
       case UPDATE_CART:
+        return {
+          ...state,
+          cart: action.cart
+        };
+
+      case REVISE_CART:
+        console.log("hello from the reducer")
         return {
           ...state,
           cart: action.cart

@@ -1,19 +1,23 @@
 import API from "./../../utils/API";
-import { confirmAlert } from 'react-confirm-alert'; // Import
+import { confirmAlert} from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import React, {Component} from "react";
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import {  withRouter, Router, Link, Redirect } from "react-router-dom";
 import "./Nav.css"
 import { connect } from "react-redux";
 import { loginUser, logoutUser } from "./../../actions/authActions";
 import PropTypes from "prop-types";
 import Popup from "reactjs-popup";
+import createHistory from "history/createBrowserHistory";
+import Home from "./../../pages/Home.js";
+
+const history = createHistory();
 
 
 class Nav extends Component {
   constructor() {
     super();
-    this.state = {}
+    this.state = {redirect: null}
   }
 
 // this.props.logoutUser()
@@ -24,7 +28,7 @@ logout =() => {
     buttons: [
       {
         label: 'Yes',
-        onClick: () => this.props.logoutUser()
+        onClick: () => this.completeLogout()
       },
       {
         label: 'No',
@@ -34,10 +38,19 @@ logout =() => {
   });
 };
 
+completeLogout = () => {
+  console.log(this.props)
+  this.props.logoutUser()
+  
 
+
+}
 
  
 render() {
+  <main>
+  <Router history={history}>{<div><Nav/><Home/></div> }</Router>
+</main>
   return (
     <nav className="navbar sticky-top py-0 navbar-expand-md navbar-dark navbarspecial">
     <Link className="navbar-brand" to="/"> <h3>

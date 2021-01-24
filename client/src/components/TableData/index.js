@@ -5,12 +5,14 @@ import { connect } from "react-redux"
 import PropTypes from "prop-types";
 
 class TableData extends Component {
-  constructor(properties) {
-    super(properties)
-    this.state = properties
+  constructor() {
+    super()
+    this.state = {}
   }
-
-  
+  componentDidMount() {
+  console.log(this.props)
+  console.log(this.props.children)
+  }
  deletePlant = (event) => {
    console.log(this.props)
     confirmAlert({
@@ -42,10 +44,11 @@ render() {
  
       <tr >
        
-        <td >{this.state.name}</td>
-        <td >{this.state.quantity}</td>
-        <td > $ {this.state.cost}</td>
-        <td ><button onClick={this.deletePlant} id={this.state.index}>remove from list</button></td>
+        <td >{this.props.auth.cart[this.props.children].name}</td>
+        <td >{this.props.auth.cart[this.props.children].number}</td>
+        <td > $ {this.props.auth.cart[this.props.children].cost}</td>
+        <td > $ {this.props.auth.cart[this.props.children].cost*this.props.auth.cart[this.props.children].number}</td>
+        <td ><button onClick={this.deletePlant} id={this.props.auth.cart[this.props.children].id}>remove from list</button></td>
       </tr>
      
     

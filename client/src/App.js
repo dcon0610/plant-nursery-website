@@ -13,10 +13,13 @@ import { Provider } from "react-redux";
 import store from "./store";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
-import { setCurrentUser, logoutUser } from "./actions/authActions";
+import { setCurrentUser, logoutUser } from "./actions/authActions"
+import { getPlants } from "./actions/PlantsActions";
 import "./app.css"
 
 // Check for token to keep user logged in
+store.dispatch(getPlants())
+
 if (localStorage.jwtToken) {
   // Set auth token header auth
   const token = localStorage.jwtToken;
@@ -61,7 +64,7 @@ function App() {
             <Route exact path="/plants/:id" component={IndividualPlant} />
           </Switch>
        
-          
+          <div style={{height: '10vh'}}></div>
           <Footer />
          </div>
     </Router>

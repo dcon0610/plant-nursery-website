@@ -19,45 +19,54 @@ library.add(
 class IndividualPlant extends React.Component {
     constructor() {
         super()
-        this.state = {quantity: 1}
+        this.state = {quantity: 1, plants: ''}
+
         //set up state for particular user to check if items in their cart
         
       }
     componentDidMount () {
         console.log("individual plant props", this.props)
+        this.setState({url: this.props.history.location.data.imageUrl})
     }
 
     handleInputChange = (event) => {
         console.log(event.target.value)
-        if ((event.target.value > 1) && (event.target.value !=='' )){
-            this.setState({quantity: event.target.value})
-           
-        }
-        else {
-            alert("Please enter a proper value")
-            this.setState ({quantity: 1})}
+        this.setState({quantity: event.target.value})
   
     }
 
     addToCart = () => {
         //add plant name, quantity, user to state in cart and send to database via an API call. 
-        console.log(this.state.quantity)
-        API.addToCart({
-            user: this.props.auth.decoded.id,
-            name: this.props.match.params.id,
-            number: this.state.quantity,
-            cost: this.props.location.data.cost
-        }).then(results => {
-            console.log(results)
-            this.props.updateCart(this.props.auth.decoded.id)
-        console.log(this.props.auth)
-
-        })
+     
+        if ((this.state.quantity > 1) && (this.state.quantity !=='' )){
+            this.setState({name: false}) 
+            var timeStamp = Date.now();//the best way to create unique idsI could think of
+       
+            console.log(this.props.auth.decoded.id)
+            API.addToCart({
+                id: timeStamp,
+                user: this.props.auth.decoded.id,
+                name: this.props.match.params.id,
+                number: this.state.quantity,
+                cost: this.props.location.data.cost
+            }).then(results => {
+                console.log(results)
+                this.props.updateCart(this.props.auth.decoded.id)
+                this.setState({name: true})
+            console.log(this.props.auth)
+    
+    
+            })
+           
+        }
+        else {
+            alert("Please enter a proper value")
+            return
+           }
+     
     }
 
 render() {
-console.log("props",this.props)
-console.log(this.props.location.imageUrl)
 
   return <div className="container">
   
@@ -65,7 +74,7 @@ console.log(this.props.location.imageUrl)
   <div className="card">
         <div className="row no-gutters">
             <div className="col-auto">
-                <img style={{width: "50vh", height: "50vh"}} src={this.props.location.data.imageUrl} className="img-fluid" alt=""></img>
+                <img style={{width: "50vh", height: "50vh"}} src={this.state.url} className="img-fluid" alt=""></img>
             </div>
             <div className="col">
                 <div className="card-block px-2">
@@ -73,8 +82,8 @@ console.log(this.props.location.imageUrl)
                     <h5 className="card-title">sub Title</h5>
                     <p>Price</p>
                     <div className="row">
-                        <div className="col-6"><span className="padding-right">Quantity: </span><input default="1" type="Number" onChange={this.handleInputChange} placeholder="1"></input></div>
-                        <div className="col-6 text-large"><button onClick={this.addToCart} className="padding-cart">Add to Cart: <FontAwesomeIcon icon={faShoppingCart} /> </button></div>
+                        <div className="col-6"><span className="padding-right">Quantity: </span><input default={1} type="Number" onChange={this.handleInputChange} placeholder="1"></input></div>
+                        <div className="col-6 text-large"><button disabled={!this.state.name} onClick={this.addToCart} className="padding-cart">Add to Cart: <FontAwesomeIcon icon={faShoppingCart} /> </button></div>
                     </div>
                     <br></br>
                     <br></br>
@@ -104,7 +113,8 @@ IndividualPlant.propTypes = {
   };
   const mapStateToProps = state => ({
     auth: state.auth,
-    errors: state.errors
+    errors: state.errors,
+    plants: state.plants
   });
   export default connect(
     mapStateToProps,

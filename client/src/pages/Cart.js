@@ -16,7 +16,7 @@ constructor() {
 
 componentDidMount () {
 
-  console.log(this.props.auth.cart)
+  console.log(this.props)
 if (this.props.auth.isAuthenticated === false){
   const element =  <Link className="nav-link" to="/login">Login</Link>
   this.setState({status: `${this.props.auth.status}. You must be logged in to add items and view your cart. `, Link:<Link className="nav-link" to="/login">Login Now</Link>} )
@@ -34,27 +34,34 @@ else {this.setState({status: this.props.auth.status})}
     <thead>
       <tr>
        
-        <th ><div>Plant</div> <div><button onClick={this.sort} id="1" className="btn btn-primary btn-sm">sort alphabetically</button></div></th>
+        <th ><div>Plant</div> <div></div></th>
         
-        <th ><div>Quantity</div> <div><button onClick={this.sort} id="2" className="btn btn-primary btn-sm">sort alphabetically</button></div></th>
-        <th >Cost</th>
+        <th ><div>Quantity</div> <div></div></th>
+        <th >Individual Cost</th>
+        <th >Individual Cost</th>
+        <th></th>
        
       </tr>
     </thead>
     <tbody>
-    { this.props.auth.cart.map(( plant, index) => (
-          <TableData
-        index = {index}
-        name = {plant.name}
-        number= {plant.number}
-        cost = {plant.cost}
+    { this.props.auth.cart.map(( plant,index) => (
+
+          <TableData>{index}
+          </TableData>
+          
         // cost
         // picture url
         // 
-        // location = {employee.location.city} 
-
-          />
+        // location = {employee.location.city}
     ))}
+    <tr>
+    <td></td>
+    <td></td>
+    <td>total cost</td>
+    <td>$ {this.props.auth.cart.reduce((accumulator, currentValue) => accumulator + currentValue.cost*currentValue.number,0)}</td>
+    <td></td>
+
+    </tr>
     </tbody>
   </table>
   </div>

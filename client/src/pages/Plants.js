@@ -3,6 +3,7 @@ import API from "../utils/API";
 import React, { useEffect, Component } from "react";
 import CardData from "../components/CardData";
 import { loginUser } from "./../actions/authActions";
+import { getPlants } from "./../actions/PlantsActions";
 import PropTypes from "prop-types";
 import classnames from "classnames"
 import { connect } from "react-redux";
@@ -13,14 +14,8 @@ constructor() {
   this.state = {plantList: []}
 }
 componentDidMount() {
-  console.log("these are the props", this.props)
-  API.getPlants()
-  .then(results => {
-    console.log(results.data)
-      this.setState({plantList: results.data})
-      
+  console.log("these are the props", this.props.plants)
 
-    });
 
 }
 
@@ -29,7 +24,7 @@ componentDidMount() {
   <div style={{height: "5vh"}}></div>   
  
     <div className="row">
-    {this.state.plantList.map((plant) => (
+    {this.props.plants.map((plant) => (
           <CardData
         route={`plants/${plant.name}`}
         name = {plant.name}
@@ -54,9 +49,10 @@ Plants.propTypes = {
 };
 const mapStateToProps = state => ({
   auth: state.auth,
-  errors: state.errors
+  errors: state.errors,
+  plants: state.plants
 });
 export default connect(
   mapStateToProps,
-  { loginUser }
+  { loginUser, getPlants }
 )(Plants);

@@ -1,3 +1,4 @@
+const { baseModelName } = require("../models/plants");
 const dbPlants = require("../models/plants")
 const dbUsers = require("../models/users");
 
@@ -30,22 +31,22 @@ exports.findAll = (req,res) => {
 
 exports.addToCart = (req,res) => {
     console.log(req.body.user)
-    dbUsers.findOneAndUpdate(req.body.user,  { $push: {cart: {name: req.body.name, number: req.body.number, cost: req.body.cost}}})
+    dbUsers.findByIdAndUpdate(req.body.user,  { $push: {cart: {id: req.body.id, name: req.body.name, number: req.body.number, cost: req.body.cost}}})
     .then(results => {
         res.send(results);
     }).catch(err => {
         res.status(500).send({
             message: err.message || "Some error occurred while retrieving todos."
         });
-    });
+    }), {new: true}
 };
 
 exports.reviseCart = (req,res) => {
-    console.log("route working",req.body.user)
-    console.log(req.body.index)
-    var string = `cart.${req.body.index}`
-    dbUsers.findOneAndUpdate(req.body.user,  { $unset: {string: 1}})
-    //dbUsers.findOneAndUpdate(req.body.user,{$pull:{"cart":null}})
+   
+    console.log(req.body)
+    dbUsers.findByIdAndUpdate(req.body.user,  { $pull: {cart: {id:Number(req.body.id)}}},{new: true})
+    //dbUsers.save()
+   //dbUsers.findById(req.body.user)
     .then(results => {
         res.send(results);
     }).catch(err => {

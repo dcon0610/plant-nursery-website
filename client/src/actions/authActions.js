@@ -36,9 +36,9 @@ export const updateCart = (userId) => dispatch => {
 })
 }
 
-export const reviseCart = (userId,index ) => dispatch => {
+export const reviseCart = (userId,id ) => dispatch => {
   console.log("this is the user Id",userId)
-  API.reviseCart({user: userId, index: index})
+  API.reviseCart({user: userId, id: id})
   .then(result => {
    console.log(result)
  var cart = JSON.stringify(result.data.cart)
@@ -114,6 +114,7 @@ export const logoutUser = () => dispatch => {
   localStorage.removeItem("loginStatus")
   // Remove auth header for future requests
   setAuthToken(false);
+  window.location.reload()
   var decoded=''
   var cart=[]
   var status="You are not logged in"
