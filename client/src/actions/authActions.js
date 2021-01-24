@@ -1,6 +1,8 @@
 import "../utils/API"
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
+import './PlantsActions'
+import {Link} from 'react-router-dom'
 import {
   GET_ERRORS,
   SET_CURRENT_USER,
@@ -78,7 +80,9 @@ export const loginUser = userData => dispatch => {
       localStorage.setItem("cartContents", cart)
       cart = JSON.parse(cart)
       localStorage.setItem("loginStatus", status)
-      dispatch(setCurrentUser(decoded, status, cart));
+      var notLoggedInMessage=''
+      var link=''
+      dispatch(setCurrentUser(decoded, status, cart,notLoggedInMessage, link));
     })
       // Set current user
       
@@ -91,13 +95,14 @@ export const loginUser = userData => dispatch => {
     );
 };
 // Set logged in user
-export const setCurrentUser = (decoded, status, cart) => {
-
+export const setCurrentUser = (decoded, status, cart, notLoggedInMessage, link) => {
   return {
     type: SET_CURRENT_USER,
     payload: decoded,
     cart: cart,
-    status: status
+    status: status,
+    notLoggedIn: notLoggedInMessage,
+    link: link
   };
 };
 // User loading
@@ -114,10 +119,12 @@ export const logoutUser = () => dispatch => {
   localStorage.removeItem("loginStatus")
   // Remove auth header for future requests
   setAuthToken(false);
-  window.location.reload()
+
   var decoded=''
   var cart=[]
-  var status="You are not logged in"
+  var status="You are not logged in. "
+  var notLoggedInMessage = "You must log in to view your cart."
+  var link = <Link className="nav-link" to="/login">Login Now</Link>
   // Set current user to empty object {} which will set isAuthenticated to false
-  dispatch(setCurrentUser(decoded, status, cart));
+  dispatch(setCurrentUser(decoded, status, cart, notLoggedInMessage, link));
 };

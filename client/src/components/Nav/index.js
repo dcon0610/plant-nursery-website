@@ -6,6 +6,7 @@ import {  withRouter, Router, Link, Redirect } from "react-router-dom";
 import "./Nav.css"
 import { connect } from "react-redux";
 import { loginUser, logoutUser } from "./../../actions/authActions";
+import { getPlants } from "./../../actions/PlantsActions";
 import PropTypes from "prop-types";
 import Popup from "reactjs-popup";
 import createHistory from "history/createBrowserHistory";
@@ -41,6 +42,7 @@ logout =() => {
 completeLogout = () => {
   console.log(this.props)
   this.props.logoutUser()
+  this.props.getPlants()
   
 
 
@@ -97,8 +99,9 @@ Nav.propTypes = {
 const mapStateToProps = state => ({
   auth: state.auth,
   errors: state.errors,
+  plants: state.plants
 });
 export default connect(
   mapStateToProps,
-  { loginUser, logoutUser }
+  { loginUser, logoutUser, getPlants }
 )(Nav);

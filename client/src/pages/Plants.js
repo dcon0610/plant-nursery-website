@@ -14,12 +14,15 @@ constructor() {
   this.state = {plantList: []}
 }
 componentDidMount() {
-  console.log("these are the props", this.props.plants)
+  console.log("these are the props", this.props)
+  
+  
 
 
 }
 
   render() {
+    console.log(this.props)
   return <div className="container">
   <div style={{height: "5vh"}}></div>   
  

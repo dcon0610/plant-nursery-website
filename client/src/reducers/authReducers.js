@@ -1,16 +1,19 @@
+
 import {
     SET_CURRENT_USER,
     USER_LOADING,
     UPDATE_CART,
     REVISE_CART
   } from "../actions/types";
+import store from "./../store";
   const isEmpty = require("is-empty");
   const initialState = {
     isAuthenticated: false,
     user: {},
     loading: false,
     cart: [],
-    status: "You are not logged in",
+    status: "You are not logged in. ",
+
 
 
   };
@@ -22,7 +25,9 @@ import {
           isAuthenticated: !isEmpty(action.payload),
           decoded: action.payload,
           cart: action.cart,
-          status: action.status
+          status: action.status,
+          notLoggedIn: action.notLoggedIn,
+          link: action.link
         };
       case USER_LOADING:
         return {
@@ -42,6 +47,7 @@ import {
           ...state,
           cart: action.cart
         };
+
       default:
         return state;
     }

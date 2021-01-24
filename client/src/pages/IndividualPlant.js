@@ -1,7 +1,8 @@
 
 import API from "../utils/API";
 import React, { useEffect, Component } from "react";
-import {Link} from 'react-router-dom'
+import {Link, useLocation} from 'react-router-dom'
+import { getPlants } from "./../actions/PlantsActions";
 import "./IndividualPlant.css"
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
@@ -19,14 +20,25 @@ library.add(
 class IndividualPlant extends React.Component {
     constructor() {
         super()
-        this.state = {quantity: 1, plants: ''}
+        this.state = {quantity: 1, name: true, plant: ''}
 
         //set up state for particular user to check if items in their cart
         
       }
     componentDidMount () {
-        console.log("individual plant props", this.props)
-        this.setState({url: this.props.history.location.data.imageUrl})
+  
+    console.log(this.props.plants)
+      const currentPath = this.props.location.pathname.split("/").pop()
+        let index = this.props.plants.findIndex( element => {
+            if (element.name === currentPath) {
+              return true;
+            }
+          });
+
+          console.log(index)
+        this.setState({url: this.props.plants[index].url})
+
+        
     }
 
     handleInputChange = (event) => {
@@ -38,11 +50,10 @@ class IndividualPlant extends React.Component {
     addToCart = () => {
         //add plant name, quantity, user to state in cart and send to database via an API call. 
      
-        if ((this.state.quantity > 1) && (this.state.quantity !=='' )){
+        if ((this.state.quantity >= 1) && (this.state.quantity !=='' )){
             this.setState({name: false}) 
             var timeStamp = Date.now();//the best way to create unique idsI could think of
        
-            console.log(this.props.auth.decoded.id)
             API.addToCart({
                 id: timeStamp,
                 user: this.props.auth.decoded.id,
@@ -74,7 +85,7 @@ render() {
   <div className="card">
         <div className="row no-gutters">
             <div className="col-auto">
-                <img style={{width: "50vh", height: "50vh"}} src={this.state.url} className="img-fluid" alt=""></img>
+                <img style={{width: "50vh", height: "50vh"}} src={`/${this.state.url}`} className="img-fluid" alt=""></img>
             </div>
             <div className="col">
                 <div className="card-block px-2">
@@ -118,6 +129,6 @@ IndividualPlant.propTypes = {
   });
   export default connect(
     mapStateToProps,
-    { loginUser, updateCart }
+    { loginUser, updateCart, getPlants }
   )(IndividualPlant);
   

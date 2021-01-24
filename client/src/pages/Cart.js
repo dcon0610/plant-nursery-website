@@ -11,23 +11,21 @@ import { connect } from "react-redux";
 class Cart extends Component {
 constructor() {
   super()
-  this.state = {status: '', link: ''}
+  this.state = {}
 }
 
 componentDidMount () {
-
   console.log(this.props)
-if (this.props.auth.isAuthenticated === false){
-  const element =  <Link className="nav-link" to="/login">Login</Link>
-  this.setState({status: `${this.props.auth.status}. You must be logged in to add items and view your cart. `, Link:<Link className="nav-link" to="/login">Login Now</Link>} )
+if (this.props.auth.isAuthenticated === true){
+  this.setState({status: '', Link:''} )
 }
-else {this.setState({status: this.props.auth.status})}
+else {this.setState({status:'You must be logged in to view your cart', Link: <Link className="nav-link" to="/login">Login Now</Link> })}
 }
 
   render() {
   return (
     <div className="container">
-      <div> {this.state.status}{this.state.Link}</div>
+      <div> {this.props.auth.status}{this.props.auth.notLoggedIn}{this.props.auth.link}</div>
       
 
     <table className="table table-striped">
