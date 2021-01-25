@@ -54,9 +54,6 @@ export const reviseCart = (userId,id ) => dispatch => {
 })
 }
 
-
-
-
 // Login - get user token
 export const loginUser = userData => dispatch => {
   API.login(userData)
@@ -96,6 +93,9 @@ export const loginUser = userData => dispatch => {
 };
 // Set logged in user
 export const setCurrentUser = (decoded, status, cart, notLoggedInMessage, link) => {
+ if (status==="You are not logged in. "){
+
+ }
   return {
     type: SET_CURRENT_USER,
     payload: decoded,

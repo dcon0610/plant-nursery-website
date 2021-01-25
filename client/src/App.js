@@ -20,6 +20,7 @@ import "./app.css"
 // Check for token to keep user logged in
 store.dispatch(getPlants())
 if (localStorage.jwtToken) {
+
   // Set auth token header auth
   const token = localStorage.jwtToken;
   setAuthToken(token);
@@ -41,7 +42,7 @@ if (localStorage.jwtToken) {
   }
 }
 
-
+console.log(store)
 
 function App() {
 

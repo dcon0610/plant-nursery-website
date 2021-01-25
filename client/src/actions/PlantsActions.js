@@ -8,6 +8,7 @@ export const getPlants = () => dispatch => {
  API.getPlants()
     .then(res => {
     console.log("returned plants",res.data)
+    localStorage.setItem('plants', JSON.stringify(res.data))
     dispatch({
       type: PLANTS,
       plants: res.data

@@ -26,19 +26,32 @@ class IndividualPlant extends React.Component {
         
       }
     componentDidMount () {
-  
-    console.log(this.props.plants)
+      if (this.props.plants.plants.length===0){
+        alert("hello")
+        var plants = JSON.parse(localStorage.getItem('plants'))
+        const currentPath = this.props.location.pathname.split("/").pop()
+        let index = plants.findIndex( element => {
+          if (element.name === currentPath) {
+            return true;
+          }
+        });
+        
+      this.setState({url: plants[index].url})
+
+      }
+      else {
       const currentPath = this.props.location.pathname.split("/").pop()
-        let index = this.props.plants.findIndex( element => {
+        let index = this.props.plants.plants.findIndex( element => {
             if (element.name === currentPath) {
               return true;
             }
           });
-
+          console.log(this.props.plants.plants)
+          console.log(currentPath)
           console.log(index)
-        this.setState({url: this.props.plants[index].url})
+        this.setState({url: this.props.plants.plants[index].url})
 
-        
+        } 
     }
 
     handleInputChange = (event) => {
@@ -78,7 +91,6 @@ class IndividualPlant extends React.Component {
     }
 
 render() {
-
   return <div className="container">
   
 <div style={{height: "5vh"}}></div>

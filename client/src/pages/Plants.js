@@ -7,27 +7,28 @@ import { getPlants } from "./../actions/PlantsActions";
 import PropTypes from "prop-types";
 import classnames from "classnames"
 import { connect } from "react-redux";
+import store from "./../store";
+
 
 class Plants extends Component {
 constructor() {
   super()
   this.state = {plantList: []}
+ 
 }
 componentDidMount() {
   console.log("these are the props", this.props)
-  
-  
 
 
 }
 
   render() {
-    console.log(this.props)
+  console.log(this.props)
   return <div className="container">
   <div style={{height: "5vh"}}></div>   
  
     <div className="row">
-    {this.props.plants.map((plant) => (
+    { this.props.plants.plants.map((plant) => (
           <CardData
         route={`plants/${plant.name}`}
         name = {plant.name}
@@ -38,7 +39,7 @@ componentDidMount() {
     ))}
   
 
-
+    }
   </div>
   
     </div>

@@ -1,11 +1,10 @@
-
+import {Link} from 'react-router-dom'
 import {
     SET_CURRENT_USER,
     USER_LOADING,
     UPDATE_CART,
     REVISE_CART
   } from "../actions/types";
-import store from "./../store";
   const isEmpty = require("is-empty");
   const initialState = {
     isAuthenticated: false,
@@ -13,6 +12,8 @@ import store from "./../store";
     loading: false,
     cart: [],
     status: "You are not logged in. ",
+    notLoggedIn: "You must be logged in to view your cart.",
+    link: <Link className="nav-link" to="/login">Login Now</Link>
 
 
 
