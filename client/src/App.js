@@ -9,6 +9,7 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Cart from "./pages/Cart";
 import IndividualPlant from "./pages/IndividualPlant";
+import AdminLogin from "./pages/AdminLogin";
 import { Provider } from "react-redux";
 import store from "./store";
 import jwt_decode from "jwt-decode";
@@ -46,6 +47,7 @@ console.log(store)
 
 function App() {
 
+
   return (
     <Provider store={store}>
 
@@ -62,6 +64,7 @@ function App() {
             <Route exact path="/login" component={Login} />
             <Route exact path="/cart" component={Cart} />
             <Route exact path="/plants/:id" component={IndividualPlant} />
+            <Route exact path="/adminlogin" component={AdminLogin} />
           </Switch>
        
           <div style={{height: '10vh'}}></div>

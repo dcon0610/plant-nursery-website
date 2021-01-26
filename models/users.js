@@ -19,7 +19,9 @@ const UserSchema = new Schema({
     default: Date.now
   },
 
-  cart: [Object]
+  cart: [Object],
+
+  usertype: {type: String, default: "user"}
     
 });
 User = mongoose.model("user", UserSchema);

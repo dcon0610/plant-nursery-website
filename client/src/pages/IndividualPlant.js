@@ -1,7 +1,7 @@
 
 import API from "../utils/API";
 import React, { useEffect, Component } from "react";
-import {Link, useLocation} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 import { getPlants } from "./../actions/PlantsActions";
 import "./IndividualPlant.css"
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { connect } from "react-redux";
 import { loginUser,updateCart } from "./../actions/authActions";
 import PropTypes from "prop-types";
+import { confirmAlert} from 'react-confirm-alert'; // Import
 
 library.add(
     faShoppingCart
@@ -27,16 +28,23 @@ class IndividualPlant extends React.Component {
       }
     componentDidMount () {
       if (this.props.plants.plants.length===0){
-        alert("hello")
-        var plants = JSON.parse(localStorage.getItem('plants'))
+        API.getPlants()
+        .then(res => {
+        console.log("returned plants",res.data)
+        var plants = res.data
+          console.log(plants[0])
         const currentPath = this.props.location.pathname.split("/").pop()
-        let index = plants.findIndex( element => {
-          if (element.name === currentPath) {
-            return true;
-          }
-        });
         
-      this.setState({url: plants[index].url})
+          let index = this.props.plants.plants.findIndex( element => {
+            if (element.name === currentPath) {
+              return true;
+            }
+          });
+         
+          this.setState({url: res.data[index].url})
+    
+      })
+     
 
       }
       else {
@@ -61,8 +69,27 @@ class IndividualPlant extends React.Component {
     }
 
     addToCart = () => {
+
         //add plant name, quantity, user to state in cart and send to database via an API call. 
-     
+        if (this.props.auth.decoded === undefined) {
+          confirmAlert({
+            title: ' Login',
+            message: 'You must login to add to cart',
+            buttons: [
+              {
+                label: 'Yes',
+                onClick: () => {  this.props.history.push("/login");;
+                }
+              },
+              {
+                label: 'No',
+                onClick: () => {return}
+              }
+            ]
+          });
+
+        }
+        else {
         if ((this.state.quantity >= 1) && (this.state.quantity !=='' )){
             this.setState({name: false}) 
             var timeStamp = Date.now();//the best way to create unique idsI could think of
@@ -81,12 +108,24 @@ class IndividualPlant extends React.Component {
     
     
             })
-           
+            
         }
         else {
-            alert("Please enter a proper value")
-            return
-           }
+          confirmAlert({
+            title: ' Incorrect value',
+            message: 'You must enter a number above zero',
+            buttons: [
+              {
+                label: 'Yes',
+                onClick: () => {return}
+              },
+              {
+                label: 'No',
+                onClick: () => {return}
+              }
+            ]
+          });
+           }}
      
     }
 

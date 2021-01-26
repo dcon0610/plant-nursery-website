@@ -17,18 +17,20 @@ constructor() {
  
 }
 componentDidMount() {
+
   console.log("these are the props", this.props)
 
 
 }
 
   render() {
+
   console.log(this.props)
   return <div className="container">
   <div style={{height: "5vh"}}></div>   
  
     <div className="row">
-    { this.props.plants.plants.map((plant) => (
+    { this.props.plants.plants && this.props.plants.plants.map((plant) => (
           <CardData
         route={`plants/${plant.name}`}
         name = {plant.name}
@@ -38,8 +40,6 @@ componentDidMount() {
           />
     ))}
   
-
-    }
   </div>
   
     </div>

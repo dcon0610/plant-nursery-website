@@ -3,6 +3,7 @@ import { fab } from '@fortawesome/free-brands-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faFacebook, faInstagram } from "@fortawesome/free-brands-svg-icons"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {Link} from 'react-router-dom'
 
 import "./footer.css"
 
@@ -39,6 +40,7 @@ function footer() {
       <div className="col">
       Phone: 0418660895
       </div>
+      <Link to ="/adminlogin"className="col">admin</Link>
      
     
     

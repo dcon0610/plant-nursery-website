@@ -8,7 +8,8 @@ import {
   SET_CURRENT_USER,
   USER_LOADING, 
   UPDATE_CART,
-  REVISE_CART
+  REVISE_CART,
+  LOGOUT
 } from "./types";
 import API from "../utils/API";
 // Register User
@@ -55,31 +56,58 @@ export const reviseCart = (userId,id ) => dispatch => {
 }
 
 // Login - get user token
-export const loginUser = userData => dispatch => {
+export const loginUser = (userData,adminstatus) => dispatch => {
   API.login(userData)
     .then(res => {
-      console.log(res)
+      console.log("userdata",res)
       // Save to localStorage
 // Set token to localStorage
       const { token } = res.data;
+      // Decode token to get user data
+      const decoded = jwt_decode(token)
+      console.log(decoded)
+      API.getUser({user: decoded.id})
+    .then(result => {
+      if (adminstatus) {
+        alert(result.data.usertype)
+        if (result.data.usertype==="admin"){
       localStorage.setItem("jwtToken", token);
       // Set token to Auth header
       setAuthToken(token);
-      // Decode token to get user data
-      const decoded = jwt_decode(token)
-      console.log(decoded.id)
-      API.getUser({user: decoded.id})
-    .then(result => {
-      console.log("checking API data", result.data.cart)
+      console.log("checking API data", result.data)
       var cart = JSON.stringify(result.data.cart)
       console.log(cart)
+      const usertype=result.data.usertype
       const status=`you are logged in as ${decoded.name}`
       localStorage.setItem("cartContents", cart)
       cart = JSON.parse(cart)
       localStorage.setItem("loginStatus", status)
       var notLoggedInMessage=''
       var link=''
-      dispatch(setCurrentUser(decoded, status, cart,notLoggedInMessage, link));
+      dispatch(setCurrentUser(decoded, status, cart,notLoggedInMessage, link, usertype));
+        }
+        else {
+         const status="You are not logged in ."
+         const usertype=''
+        const cart = []
+         dispatch(setCurrentUser(decoded, status, cart,notLoggedInMessage, link, usertype));
+        }}
+        else {
+          localStorage.setItem("jwtToken", token);
+          // Set token to Auth header
+          setAuthToken(token);
+          console.log("checking API data", result.data)
+          var cart = JSON.stringify(result.data.cart)
+          console.log(cart)
+          const usertype=result.data.usertype
+          const status=`you are logged in as ${decoded.name}`
+          localStorage.setItem("cartContents", cart)
+          cart = JSON.parse(cart)
+          localStorage.setItem("loginStatus", status)
+          var notLoggedInMessage=''
+          var link=''
+          dispatch(setCurrentUser(decoded, status, cart,notLoggedInMessage, link, usertype));
+        }
     })
       // Set current user
       
@@ -92,17 +120,30 @@ export const loginUser = userData => dispatch => {
     );
 };
 // Set logged in user
-export const setCurrentUser = (decoded, status, cart, notLoggedInMessage, link) => {
+export const setCurrentUser = ( decoded, status, cart, notLoggedInMessage, link,usertype) => {
  if (status==="You are not logged in. "){
-
+  localStorage.removeItem("jwtToken");
+  localStorage.removeItem("cartContents")
+  localStorage.removeItem("loginStatus")
+  return {
+    type: LOGOUT,
+    payload: decoded,
+    cart: cart,
+    status: status,
+    notLoggedIn: notLoggedInMessage,
+    link: link,
+    usertype: usertype
+  }
  }
+ 
   return {
     type: SET_CURRENT_USER,
     payload: decoded,
     cart: cart,
     status: status,
     notLoggedIn: notLoggedInMessage,
-    link: link
+    link: link,
+    usertype: usertype
   };
 };
 // User loading
@@ -125,6 +166,7 @@ export const logoutUser = () => dispatch => {
   var status="You are not logged in. "
   var notLoggedInMessage = "You must log in to view your cart."
   var link = <Link className="nav-link" to="/login">Login Now</Link>
+  var usertype=''
   // Set current user to empty object {} which will set isAuthenticated to false
   dispatch(setCurrentUser(decoded, status, cart, notLoggedInMessage, link));
 };
