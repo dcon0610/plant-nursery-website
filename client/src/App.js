@@ -4,7 +4,7 @@ import Nav from "./components/Nav";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Plants from "./pages/Plants";
-import Seeds from "./pages/Seeds";
+import Admin from "./pages/Admin";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Cart from "./pages/Cart";
@@ -59,7 +59,7 @@ function App() {
             <Route exact path="/" component={Home} />
             <Route exact path="/home" component={Home} />
             <Route exact path="/plants" component={Plants} />
-            <Route exact path="/seeds" component={Seeds} />
+            <Route exact path="/admin" component={Admin} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/cart" component={Cart} />

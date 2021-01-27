@@ -7,7 +7,6 @@ import API from "../utils/API";
 export const getPlants = () => dispatch => {
  API.getPlants()
     .then(res => {
-    console.log("returned plants",res.data)
     dispatch({
       type: PLANTS,
       plants: res.data

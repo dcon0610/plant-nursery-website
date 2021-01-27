@@ -68,9 +68,6 @@ render() {
         <li className="nav-item active"> 
         <Link className="nav-link" to="/plants">Plants <span className="sr-only">(current)</span></Link>
         </li>
-        <li className="nav-item active">
-                <Link className="nav-link" to="/seeds">Seeds <span className="sr-only">(current)</span></Link>
-            </li>
             <li className="nav-item active">
                 <Link className="nav-link" to="/cart">Cart ({this.props.auth.cart.length}) <span className="sr-only">(current)</span></Link>
             </li>

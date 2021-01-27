@@ -84,6 +84,7 @@ export const loginUser = (userData,adminstatus) => dispatch => {
       localStorage.setItem("loginStatus", status)
       var notLoggedInMessage=''
       var link=''
+      console.log("usertype", usertype)
       dispatch(setCurrentUser(decoded, status, cart,notLoggedInMessage, link, usertype));
         }
         else {
@@ -96,9 +97,7 @@ export const loginUser = (userData,adminstatus) => dispatch => {
           localStorage.setItem("jwtToken", token);
           // Set token to Auth header
           setAuthToken(token);
-          console.log("checking API data", result.data)
           var cart = JSON.stringify(result.data.cart)
-          console.log(cart)
           const usertype=result.data.usertype
           const status=`you are logged in as ${decoded.name}`
           localStorage.setItem("cartContents", cart)

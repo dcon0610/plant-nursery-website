@@ -8,6 +8,63 @@ const keys = require("./../config/keys");
 const validateRegisterInput = require("./../validation/register");
 const validateLoginInput = require("./../validation/login");
 const User = require("./../models/users");
+const braintree = require("braintree")
+
+var gateway = new braintree.BraintreeGateway({
+  environment: braintree.Environment.Sandbox,
+  merchantId: 'jbdy99f6t7dgbryv',
+  publicKey: 'bpyzwwcxj6zmx5kq',
+  privateKey: '50b5df6afdd9cdec64b2c491f3129c99'
+}); 
+
+
+  router.get("/braintree", function(req, res) {
+    res.send("Braintree route is healthy")
+  })
+
+  router.get("/api/braintree/v1/getToken", async function(req, res) {
+    try {
+      gateway.clientToken.generate({}, function(err, response) {
+        if (err) {
+          res.status(500).send(err)
+        } else {
+          res.send(response)
+        }
+      })
+    } catch (err) {
+      res.status(500).send(err)
+    }
+  })
+
+  router.post("/api/braintree/v1/sandbox", async function(req, res) {
+    try {
+      // Use the payment method nonce here
+      var nonceFromTheClient = req.body.paymentMethodNonce
+      // Create a new transaction for $10
+      var newTransaction = gateway.transaction.sale(
+        {
+          amount: "10.00",
+          paymentMethodNonce: nonceFromTheClient,
+          options: {
+            // This option requests the funds from the transaction once it has been
+            // authorized successfully
+            submitForSettlement: true,
+          },
+        },
+        function(error, result) {
+          if (result) {
+            res.send(result)
+          } else {
+            res.status(500).send(error)
+          }
+        }
+      )
+    } catch (err) {
+      // Deal with an error
+      console.log(err)
+      res.send(err)
+    }
+  })
 
 router.get('/api/plants',getPlants.findAll)
 

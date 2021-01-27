@@ -7,22 +7,57 @@ import { loginUser } from "./../actions/authActions";
 import PropTypes from "prop-types";
 import classnames from "classnames"
 import { connect } from "react-redux";
+import "braintree-web"
+import axios from "axios"
+import DropIn from "braintree-web-drop-in-react"
 
 class Cart extends Component {
 constructor() {
   super()
-  this.state = {}
+  this.state = {clientToken : null}
 }
 
-componentDidMount () {
+async componentDidMount () {
+  try {
+    // Get a client token for authorization from your server
+    const response = await axios.get(
+      "/api/braintree/v1/getToken"
+    )
+    const clientToken = response.data.clientToken
+
+    this.setState({ clientToken })
+  } catch (err) {
+    console.error(err)
+  }
   console.log(this.props)
 if (this.props.auth.isAuthenticated === true){
   this.setState({status: '', Link:''} )
 }
 else {this.setState({status:'You must be logged in to view your cart', Link: <Link className="nav-link" to="/login">Login Now</Link> })}
 }
+async buy() {
+  try {
 
+  
+    // Send the nonce to your server
+    const { nonce } = await this.instance.requestPaymentMethod()
+    alert(nonce)
+    const response = await axios.post(
+      "/api/braintree/v1/sandbox",
+      nonce
+    )
+    console.log(response)
+  } catch (err) {
+    console.error(err)
+  }
+}
   render() {
+    if (!this.state.clientToken) {
+      return (
+        <div>
+          <h1>Loading...</h1>
+        </div>)}
+        else {
   return (
     <div className="container">
       <div> {this.props.auth.status}{this.props.auth.notLoggedIn}{this.props.auth.link}</div>
@@ -57,14 +92,20 @@ else {this.setState({status:'You must be logged in to view your cart', Link: <Li
     <td></td>
     <td>total cost</td>
     <td>$ {this.props.auth.cart.reduce((accumulator, currentValue) => accumulator + currentValue.cost*currentValue.number,0)}</td>
-    <td></td>
+    {this.props.auth.isAuthenticated && <td>   <DropIn 
+            options={{
+              authorization: this.state.clientToken,
+            }}
+            onInstance={instance => (this.instance = instance)}
+          />
+          <button onClick={this.buy.bind(this)}>Buy</button></td>}
 
     </tr>
     </tbody>
   </table>
   </div>
   )
-  }
+  }}
 };
 Cart.propTypes = {
   loginUser: PropTypes.func.isRequired,
