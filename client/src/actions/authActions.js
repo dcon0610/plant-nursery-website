@@ -69,8 +69,8 @@ export const loginUser = (userData,adminstatus) => dispatch => {
       API.getUser({user: decoded.id})
     .then(result => {
       if (adminstatus) {
-        alert(result.data.usertype)
         if (result.data.usertype==="admin"){
+      localStorage.setItem("usertype",result.data.usertype );
       localStorage.setItem("jwtToken", token);
       // Set token to Auth header
       setAuthToken(token);
@@ -157,6 +157,7 @@ export const logoutUser = () => dispatch => {
   localStorage.removeItem("jwtToken");
   localStorage.removeItem("cartContents")
   localStorage.removeItem("loginStatus")
+  localStorage.removeItem("usertype")
   // Remove auth header for future requests
   setAuthToken(false);
 

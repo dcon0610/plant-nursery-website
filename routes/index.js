@@ -151,6 +151,6 @@ router.post("/api/users/login", (req, res) => {
 
   router.post("/api/plants/removefromcart",getPlants.reviseCart)
 
+  router.post("/api/plants/addplant", getPlants.addPlant)
  
-
 module.exports = router;

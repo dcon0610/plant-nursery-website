@@ -15,14 +15,18 @@ class Login extends Component {
     };
   }
   componentDidMount() {
-    
+    if (this.props.admin) {
     console.log("properties on login page",this.props)
     if (this.props.auth.isAuthenticated) {
-      alert("you are already logged in!!")
-      this.props.history.push("/");
+      this.props.history.push("/admin");
     }
   }
-  
+  else {
+    if (this.props.auth.isAuthenticated) {
+      alert("you are already logged in!!")
+    }
+  }
+}
   
 componentWillReceiveProps(nextProps) {
     if (!this.props.admin) {
@@ -40,7 +44,7 @@ if (nextProps.errors) {
 
         console.log("usertype",nextProps.auth.usertype  )
         if (nextProps.auth.usertype==="admin"){
-            this.props.history.push("/seeds")
+            this.props.history.push("/admin")
         }
         else {
             alert("you are not registered to be an admin")

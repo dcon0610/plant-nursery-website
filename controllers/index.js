@@ -41,6 +41,7 @@ exports.addToCart = (req,res) => {
     }), {new: true}
 };
 
+
 exports.reviseCart = (req,res) => {
    
     console.log(req.body)
@@ -55,6 +56,24 @@ exports.reviseCart = (req,res) => {
         });
     });
 };
+exports.addPlant = (req,res) => {
+   
+    console.log("incoming data",req.body)
+    const newUser = new dbPlants({
+        "name": req.body.plantName,
+        "cost": req.body.cost,
+        "height": 24
+
+      })
+      newUser
+      .save()
+            .then(newUser => {return res.json(newUser)})
+            .catch(err => console.log(err));
+    //dbUsers.save()
+   //dbUsers.findById(req.body.user)
+
+    }
+
 
 
 

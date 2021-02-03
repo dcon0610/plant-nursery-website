@@ -25,6 +25,10 @@ export default {
 
   reviseCart: function(userdata, index) {
     return axios.post("/api/plants/removefromcart", userdata)
+  },
+
+  addPlant: function(userdata) {
+    return axios.post("/api/plants/addplant", userdata)
   }
 
   // // Gets the post with the given id
