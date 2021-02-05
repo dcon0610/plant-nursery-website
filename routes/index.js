@@ -9,6 +9,7 @@ const validateRegisterInput = require("./../validation/register");
 const validateLoginInput = require("./../validation/login");
 const User = require("./../models/users");
 const braintree = require("braintree")
+const path = require('path')
 
 var gateway = new braintree.BraintreeGateway({
   environment: braintree.Environment.Sandbox,
@@ -16,7 +17,10 @@ var gateway = new braintree.BraintreeGateway({
   publicKey: 'bpyzwwcxj6zmx5kq',
   privateKey: '50b5df6afdd9cdec64b2c491f3129c99'
 }); 
+router.use(function(req, res) {
+res.sendFile(path.join(__dirname, "../client/build/index.html"))
 
+})
 
   router.get("/braintree", function(req, res) {
     res.send("Braintree route is healthy")
