@@ -198,7 +198,7 @@ const show = (event) => {
                       {
                         label: 'Ok',
                         onClick: () => 
-                        {
+                        {window.location.reload()
                           return}
                       }
                     ]
@@ -252,7 +252,7 @@ setOptionsToDelete(selectedOption)
                   label: 'Ok',
                   onClick: () => 
                   {
-                    
+                    window.location.reload()
                     return}
                 }
               ]
@@ -291,7 +291,7 @@ const deactivatePlant = () => {
                   label: 'Ok',
                   onClick: () => 
                   {
-                    
+                    window.location.reload()
                     return}
                 }
               ]
@@ -330,7 +330,7 @@ const reActivatePlant = () => {
                   label: 'Ok',
                   onClick: () => 
                   {
-                    
+                    window.location.reload()
                     return}
                 }
               ]
