@@ -10,7 +10,7 @@ function linkCard (props) {
     <div className="col-4 text-center">
         <div className="card">
         <Link to ={props.linkUrl}>
-        <img className="card-img-top" src={props.picture} alt="Card image cap"></img>
+        <img className="card-img-top hide" src={props.picture} alt="Card image cap"></img>
         </Link>
             <div className="card-body">
                 <h5 className="card-title">{props.title}</h5>

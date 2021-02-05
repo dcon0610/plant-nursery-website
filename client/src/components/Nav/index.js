@@ -11,6 +11,7 @@ import PropTypes from "prop-types";
 import Popup from "reactjs-popup";
 import createHistory from "history/createBrowserHistory";
 import Home from "./../../pages/Home.js";
+import {Dropdown} from 'react-bootstrap'
 
 const history = createHistory();
 
@@ -57,10 +58,24 @@ render() {
   return (
     <nav className="navbar sticky-top py-0 navbar-expand-md navbar-dark navbarspecial">
     <Link className="navbar-brand" to="/"> <h3>
-  <img src="/tree.jpg" height="70" width="70" alt="" className="navimage"></img>
+  <img src="/tree.jpg" height="70" width="70" alt="" className="navimage hide"></img>
   Green Hills Nursery 
   </h3></Link>
-    
+  <div className="test nav-item">
+  <Dropdown>
+  <Dropdown.Toggle variant="success" id="dropdown-basic">
+    Menu
+  </Dropdown.Toggle>
+
+  <Dropdown.Menu>
+    <Dropdown.Item > <Link className="nav-link" to="/plants">Plants <span className="sr-only">(current)</span></Link></Dropdown.Item>
+    <Dropdown.Item > <Link className="nav-link" to="/cart">Cart ({this.props.auth.cart.length}) <span className="sr-only">(current)</span></Link></Dropdown.Item>
+    <Dropdown.Item > <Link className="nav-link" to="/login">Login</Link></Dropdown.Item>
+    <Dropdown.Item > <Link className="nav-link" to="/register">Register</Link></Dropdown.Item>
+    <Dropdown.Item > <Link className="nav-link" onClick={this.logout}>Logout</Link></Dropdown.Item>
+  </Dropdown.Menu>
+</Dropdown>
+</div>
     <div className="collapse navbar-collapse" id="navbarNav">
         <ul className="navbar-nav ml-auto">
         <li className="nav-item active" style={{paddingTop: '1vh'}}>  <span>{this.props.auth.status} </span> </li>

@@ -29,7 +29,7 @@ componentDidMount() {
   return <div className="container">
   <div style={{height: "5vh"}}></div>   
  
-    <div className="row">
+    <div className="row full">
     { this.props.plants.plants && this.props.plants.plants.map((plant) => (
           <CardData
         route={`plants/${plant.name}`}

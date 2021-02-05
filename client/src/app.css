@@ -1,0 +1,19 @@
+@media all and (min-width:500px) {
+    .test {
+        display: none
+    }
+    .height {
+        height: 50vh;
+        margin-top: 10vh;
+        margin-bottom: auto;
+       
+        object-fit: cover
+    }
+  }
+
+  @media all and (max-width:500px) {
+    .hide {
+        display: none
+    }
+    .full {height: 110%; overflow-y: scroll}
+  }
