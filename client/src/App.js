@@ -11,12 +11,13 @@ import Cart from "./pages/Cart";
 import IndividualPlant from "./pages/IndividualPlant";
 import AdminLogin from "./pages/AdminLogin";
 import { Provider } from "react-redux";
-import store from "./store";
+import {store, persistor} from "./store";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions"
 import { getPlants } from "./actions/PlantsActions";
 import "./app.css"
+import {PersistGate} from 'redux-persist/integration/react'
 
 
 // Check for token to keep user logged in
@@ -53,10 +54,12 @@ function App() {
     <Provider store={store}>
 
   <Router>
+    <PersistGate persistor = {persistor}>
       <div>
     
           <Nav />
           <Switch>
+            
             <Route exact path="/" component={Home} />
             <Route exact path="/home" component={Home} />
             <Route exact path="/plants" component={Plants} />
@@ -71,6 +74,7 @@ function App() {
           <div style={{height: '10vh'}}></div>
           <Footer />
          </div>
+         </PersistGate>
     </Router>
     </Provider>
   );
