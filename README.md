@@ -46,8 +46,10 @@ Most of the application was written in class components but since Functional com
 Given the time spent on learning technologies (I started this project with a minimal understanding of react and much more experience in Vue.js), the weak point of this project is styling, especially for mobile users. Before I launch this site, i will customize it to ensure it is fully mobile friendly - mobile first. I will also implement a fully functional payment system. 
 
 DeployedApplication: https://arcane-retreat-16998.herokuapp.com/
+
 Github: https://github.com/dcon0610/plant-nursery-website
-Readme: 
+
+Readme: https://github.com/dcon0610/plant-nursery-website/blob/main/README.md
 
 
 
