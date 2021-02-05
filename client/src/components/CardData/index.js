@@ -9,7 +9,7 @@ function CardData(props) {
 
   return (
 <div className="col-4">
-<Link to={{pathname: `/${props.route}`, data: {imageUrl: props.url, cost: props.cost}}} >
+<Link to={{pathname: `/${props.route}`, data: {}}} >
 <div className="card" >
   <img className="card-img-top" style={{width:"18rem", height: "18rem"}} src={props.url} alt="Card image cap"></img>
   <div className="card-body text-center">

@@ -5,37 +5,41 @@ import Link from "../linkCard";
 class Links extends React.Component {
     constructor() {
         super()
-        this.state = {test: [
-            {
+        this.state = {
             linkUrl: "/plants",
             picture: "button1.jpg",
-            linkText: "Browse Plants"}, 
-            {
-            linkUrl: "/seeds",
-            picture: "button2.jpg",
-            linkText: "Browse Seeds"}, 
-            {
-            linkUrl: "/resources",
-            picture: "button3.jpg",
-            linkText: "Resources"}, 
-        ]}
-    }
+            linkText: "Browse Plants"}
+        }
+    
 
 render() {
   return (
-    <div className="container text-center"  >
+    <div   >
     
     <div className="row height vertical">
-    {this.state.test.map(( x) => (
-          <Link 
+   
+          <Link className="container text-center"
 
-            linkUrl = {x.linkUrl}
-            linkText={x.linkText}
-            picture={x.picture}
+            linkUrl = {this.state.linkUrl}
+            linkText={this.state.linkText}
+            picture={this.state.picture}
           
           />
+          <div className="col-7">
+            <h4>Welcome to Green Hills Nursery</h4>
+            <h5>We are a plant nursery located in Meadows, SA.</h5>
+            <p>We specialize in drought tolerant, hardy perennials and annuals which are suited to our harsh summer
+              climate. The gardens have over 100 species of plants  growing and as more plants are propagated, more 
+              will be added to the site. </p>
+              <p>
+              To browse our current range, please click on the button to the left.
+              To see more pictures of the garden, click on the instgram icon below.
+            </p>
 
-    ))}
+          </div>
+
+
+    
     </div>
   </div>
 

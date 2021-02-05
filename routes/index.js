@@ -152,5 +152,11 @@ router.post("/api/users/login", (req, res) => {
   router.post("/api/plants/removefromcart",getPlants.reviseCart)
 
   router.post("/api/plants/addplant", getPlants.addPlant)
+
+  router.post("/api/plants/deleteplant", getPlants.deletePlant)
+
+  router.post("/api/plants/deactivateplant", getPlants.deactivatePlant)
+
+  router.post("/api/plants/reactivateplant", getPlants.activatePlant)
  
 module.exports = router;

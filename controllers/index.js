@@ -62,7 +62,9 @@ exports.addPlant = (req,res) => {
     const newUser = new dbPlants({
         "name": req.body.plantName,
         "cost": req.body.cost,
-        "height": 24
+        "description":req.body.description,
+        "id": req.body.id,
+        "url": req.body.url
 
       })
       newUser
@@ -73,9 +75,35 @@ exports.addPlant = (req,res) => {
    //dbUsers.findById(req.body.user)
 
     }
+    exports.deletePlant = (req,res) => {
+   
+        dbPlants.deleteMany( { name: { $in: req.body.array } } ).then(res.send("success"))
+    
+        }
 
-
-
+        exports.deactivatePlant = (req,res) => {
+            console.log(req.body.array)
+            dbPlants.updateMany({name: {$in: req.body.array}},{$set:{'show':false}})
+            .then(results => {
+                res.send(results);
+            }).catch(err => {
+                res.status(500).send({
+                    message: err.message || "Some error occurred while retrieving todos."
+                });
+            }), {new: true}
+        };
+        
+        exports.activatePlant = (req,res) => {
+            console.log(req.body.array)
+            dbPlants.updateMany({name: {$in: req.body.array}},{$set:{'show':true}})
+            .then(results => {
+                res.send(results);
+            }).catch(err => {
+                res.status(500).send({
+                    message: err.message || "Some error occurred while retrieving todos."
+                });
+            }), {new: true}
+        };
 
 
 

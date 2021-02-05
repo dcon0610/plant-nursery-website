@@ -24,6 +24,7 @@
     "http-proxy-middleware": "^1.0.6",
     "is-empty": "^1.2.0",
     "jsonwebtoken": "^8.5.1",
+    "logrocket": "^1.0.14",
     "mongoose": "^5.11.12",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.7",

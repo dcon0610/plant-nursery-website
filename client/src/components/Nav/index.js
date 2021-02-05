@@ -1,7 +1,7 @@
 import API from "./../../utils/API";
 import { confirmAlert} from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
-import React, {Component} from "react";
+import React, {Component, Context} from "react";
 import {  withRouter, Router, Link, Redirect } from "react-router-dom";
 import "./Nav.css"
 import { connect } from "react-redux";
@@ -23,6 +23,7 @@ class Nav extends Component {
 
 // this.props.logoutUser()
 logout =() => {
+localStorage.setItem("logging out", true)
   confirmAlert({
     title: ' Logout',
     message: 'Press yes to continue, no to return.',
@@ -40,19 +41,19 @@ logout =() => {
 };
 
 completeLogout = () => {
+ 
   console.log(this.props)
   this.props.logoutUser()
   this.props.getPlants()
   
 
 
+
 }
 
  
 render() {
-  <main>
-  <Router history={history}>{<div><Nav/><Home/></div> }</Router>
-</main>
+
   return (
     <nav className="navbar sticky-top py-0 navbar-expand-md navbar-dark navbarspecial">
     <Link className="navbar-brand" to="/"> <h3>

@@ -10,61 +10,137 @@ import { confirmAlert} from 'react-confirm-alert'; // Import
 import Select from 'react-select';
 
 function Admin () {
+  const history = useHistory()
+  const usertype = localStorage.getItem("usertype")
+  console.log(localStorage.getItem("logging out"))
+  if(!localStorage.getItem("logging out")) {
+  if (usertype !== "admin"){
+    history.push("/adminlogin")
+    confirmAlert({
+      title: 'Restricted',
+      message: 'you are not logged in as a admin',
+      buttons: [
+        {
+          label: 'Ok',
+          onClick: () => {
+            return}
+        }
+      ]
+    });
+  }}
+  else {
+    localStorage.removeItem("logging out")
+    history.push("/plants")
+  }
   const [showAddPlantState, addPlantFunction] = useState(false);
   const [showDeletePlantState, deletePlantFunction] = useState(false);
   const [showRemoveUserState, removeUserFunction] = useState(false);
+
+  const [showDeactivateState, showDeactivateFunction] = useState(false);
+  const [showActivateState, showActivateFunction] = useState(false);
   const selectedOption=''
+  const [optionsToDelete, setOptionsToDelete] = useState('');
   
   const [plantName, setPlantName] = useState('');
   const [plantList, updateAvailability] = useState('');
-    const [flowerColour, setFlowerColour] = useState('');
+    const [description, setDescription] = useState('');
     const [cost, setCost] = useState('');
     const [flowerSeason, setFlowerSeason] = useState('summer');
     const [url, setUrl] = useState('');
+    const [deactivated, setDeactivated] = useState([]);
+    
   const store = useSelector(store => store)
-  const history = useHistory()
+
 
 
 useEffect(() => {
 
-console.log("after the update", store.auth.usertype)
+console.log("after the update", store)
 
 }, 
 [store]);
 let options = [];
 console.log(store.plants)
 store.plants.plants.map(item =>
-  options.push({label: item.name, value: item.height} ),
+  options.push({label: item.name, value: item.id} ),
+);
+let inactiveOptions = []
+store.plants.inactivePlants.map(item =>
+  inactiveOptions.push({label: item.name, value: item.id} ),
 );
 console.log("options",options)
-const usertype = localStorage.getItem("usertype")
 
-if (usertype !== "admin"){
-  history.push("/")
-}
+
+ 
+
+// API.getPlants()
+//         .then(res => {
+//           const plantsShown = res.data.filter(item => item.show === false);
+
+
+//           const sortedPlants = plantsShown.sort(function(a, b) {
+//             var nameA = a.name.toUpperCase(); // ignore upper and lowercase
+//             var nameB = b.name.toUpperCase(); // ignore upper and lowercase
+//             if (nameA < nameB) {
+//               return -1; //nameA comes first
+//             }
+//             if (nameA > nameB) {
+//               return 1; // nameB comes first
+//             }
+//             return 0;  // names must be equal
+
+//         })
+// // const reactivateOptions = sortedPlants.map(item =>
+// //   sortedPlants.push({label: item.name, value: item.id} ),
+// //);
+      
+    
+//         console.log(options)
+      
+//       })
 const show = (event) => {
   
   switch (event.target.id) {
     case "addPlant":
      addPlantFunction(!showAddPlantState)
      setPlantName('')
-     setFlowerColour('')
+     setDescription('')
      setCost('')
      setUrl('')
      deletePlantFunction(false)
      removeUserFunction(false)
+     showDeactivateFunction(false)
+     showActivateFunction(false)
 
       break;
     case "deletePlant":
       addPlantFunction(false)
       deletePlantFunction(!showDeletePlantState)
       removeUserFunction(false)
+      showDeactivateFunction(false)
+     showActivateFunction(false)
       break;
     case "removeUser":
       addPlantFunction(false)
       deletePlantFunction(false)
       removeUserFunction(!showRemoveUserState)
+      showDeactivateFunction(false)
+     showActivateFunction(false)
       break;
+      case "activatePlant":
+        addPlantFunction(false)
+        deletePlantFunction(false)
+        removeUserFunction(false)
+        showDeactivateFunction(false)
+       showActivateFunction(!showActivateState)
+        break;
+        case "deactivatePlant":
+          addPlantFunction(false)
+          deletePlantFunction(false)
+          removeUserFunction(false)
+          showDeactivateFunction(!showDeactivateState)
+         showActivateFunction(false)
+          break;
     
   }
 
@@ -73,10 +149,10 @@ const show = (event) => {
   	
 
     const handleSubmit= (e) => {
-      console.log(plantName, flowerColour, cost)
+      console.log(plantName, description, cost)
       e.preventDefault();
-      if (plantName ==='' || flowerColour ==='' || cost ===''){
-        console.log(plantName, flowerColour, cost)
+      if (plantName ==='' || description ==='' || cost ===''){
+        console.log(plantName, description, cost)
         confirmAlert({
           title: 'Incorrect Details',
           message: 'you have not entered all plant properties',
@@ -95,7 +171,7 @@ const show = (event) => {
             <div className='custom-ui'>
               <h1>Confirm Plant Details</h1>
               <p>plant name: {plantName}</p>
-              <p>flower colour: {flowerColour}</p>
+              <p>flower colour: {description}</p>
               <p>cost: {cost}</p>
               <p>flower season: {flowerSeason}</p>
               <p>photoName: {url}</p>
@@ -105,15 +181,28 @@ const show = (event) => {
                 onClick={() => {
                   const userdata ={
                     "plantName": plantName,
-                    "flowerColour": flowerColour,
+                    "description": description,
                     "cost": cost,
                     "flowerSeason": flowerSeason,
-                    "url": url
+                    "url": url,
+                    "id": Date.now()
                   }
                  API.addPlant(userdata).then((result)=> {
                   console.log(result)
                   onClose()
                   addPlantFunction(false)
+                  confirmAlert({
+                    title: 'Success!',
+                    message: 'you have successfully added a plant',
+                    buttons: [
+                      {
+                        label: 'Ok',
+                        onClick: () => 
+                        {window.location.reload()
+                          return}
+                      }
+                    ]
+                  });
                  })
                  
                 }}
@@ -131,8 +220,130 @@ const show = (event) => {
     }
 
  const handleUpdate= selectedOption => {
-console.log(selectedOption)
+
+setOptionsToDelete(selectedOption)
+
+
+
+
  }
+
+ const removePlant = () => {
+ 
+  confirmAlert({
+    title: 'Confirm',
+    message: 'Are you sure you want to delete a plant.',
+    buttons: [
+      {
+        label: 'Ok',
+        onClick: () => 
+        {
+          const name = optionsToDelete.map(element =>{ return element.label})
+      
+          API.deletePlant({"array": name}).then((result)=> {
+            console.log(result)
+            
+            deletePlantFunction(false)
+            confirmAlert({
+              title: 'Success!',
+              message: 'you have successfully deleted a plant',
+              buttons: [
+                {
+                  label: 'Ok',
+                  onClick: () => 
+                  {
+                    window.location.reload()
+                    return}
+                }
+              ]
+            });
+           })
+          
+         }
+      },
+      {label: 'Cancel',
+      onClick: () => {return}}
+    ]
+  });
+}
+
+const deactivatePlant = () => {
+ 
+  confirmAlert({
+    title: 'Confirm',
+    message: 'Are you sure you want to deactivate plants.',
+    buttons: [
+      {
+        label: 'Ok',
+        onClick: () => 
+        {
+          const name = optionsToDelete.map(element =>{ return element.label})
+      
+          API.deactivate({"array": name}).then((result)=> {
+            console.log(result)
+            
+            showDeactivateFunction(false)
+            confirmAlert({
+              title: 'Success!',
+              message: 'you have deactivated plants',
+              buttons: [
+                {
+                  label: 'Ok',
+                  onClick: () => 
+                  {
+                    window.location.reload()
+                    return}
+                }
+              ]
+            });
+           })
+          
+         }
+      },
+      {label: 'Cancel',
+      onClick: () => {return}}
+    ]
+  });
+}
+
+const reActivatePlant = () => {
+ 
+  confirmAlert({
+    title: 'Confirm',
+    message: 'Are you sure you want to reactivate these plants.',
+    buttons: [
+      {
+        label: 'Ok',
+        onClick: () => 
+        {
+          const name = optionsToDelete.map(element =>{ return element.label})
+      
+          API.reactivate({"array": name}).then((result)=> {
+            console.log(result)
+            
+            showActivateFunction(false)
+            confirmAlert({
+              title: 'Success!',
+              message: 'you have successfully reactivated these plants!',
+              buttons: [
+                {
+                  label: 'Ok',
+                  onClick: () => 
+                  {
+                    window.location.reload()
+                    return}
+                }
+              ]
+            });
+           })
+          
+         }
+      },
+      {label: 'Cancel',
+      onClick: () => {return}}
+    ]
+  });
+}
   return (
     <div className="container" >
       <h2 className="text-center">Admin Actions</h2>
@@ -150,13 +361,13 @@ console.log(selectedOption)
         />
         </div>
         <div className="row mt-2">
-        <label className="col-3">Flower Colour:</label>
+        <label className="col-3">Description:</label>
         <br />
         <input className="col-3"
-          name='flowerColour' 
+          name='description' 
           type='text'
-          value={flowerColour}
-          onChange={e => setFlowerColour(e.target.value)}
+          value={description}
+          onChange={e => setDescription(e.target.value)}
         />
         </div>
         <div className="row mt-2">
@@ -202,15 +413,45 @@ console.log(selectedOption)
         <label className="col-5 text-center my-auto"><h5>Select Plants to Remove from Sale:</h5></label>
         <br />
         <Select className="col-4" options={options} isMulti  onChange={handleUpdate}/>
-        <input className="col-1" 
+        <input className="col-2" 
           type='submit' 
-          value='Add Plant' 
+          value='Remove Plant' 
+          onClick={removePlant}
         />
         </div>
       
         </div>}
-      <button id="removeUser" onClick={show} className="row mt-4"style={{width:"100%",fontSize:"large" }}>Click here to remove a user</button>
-      {showRemoveUserState && <div>show</div>}
+
+        <button id="deactivatePlant" onClick={show} className="row mt-4"style={{width:"100%", fontSize:"large"}}>Click here to deactivate plants</button>
+      {showDeactivateState && <div>
+      <div className="row mt-2">
+        <label className="col-5 text-center my-auto"><h5>Select Plants to Deactivate:</h5></label>
+        <br />
+        <Select className="col-4" options={options} isMulti  onChange={handleUpdate}/>
+        <input className="col-2" 
+          type='submit' 
+          value='Deactivate' 
+          onClick={deactivatePlant}
+        />
+        </div>
+      
+        </div>}
+
+        <button id="activatePlant" onClick={show} className="row mt-4"style={{width:"100%", fontSize:"large"}}>Click here to reactivate plants</button>
+      {showActivateState && <div>
+      <div className="row mt-2">
+        <label className="col-5 text-center my-auto"><h5>Select Plants to reactivate:</h5></label>
+        <br />
+        <Select className="col-4" options={inactiveOptions} isMulti  onChange={handleUpdate}/>
+        <input className="col-2" 
+          type='submit' 
+          value='reactivate' 
+          onClick={reActivatePlant}
+        />
+        </div>
+      
+        </div>}
+     
     </div>
 
   );

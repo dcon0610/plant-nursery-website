@@ -3,6 +3,8 @@ import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 import './PlantsActions'
 import {Link} from 'react-router-dom'
+
+
 import {
   GET_ERRORS,
   SET_CURRENT_USER,
@@ -68,10 +70,9 @@ export const loginUser = (userData,adminstatus) => dispatch => {
       console.log(decoded)
       API.getUser({user: decoded.id})
     .then(result => {
-      if (adminstatus) {
-        if (result.data.usertype==="admin"){
+  
       localStorage.setItem("usertype",result.data.usertype );
-      localStorage.setItem("jwtToken", token);
+     
       // Set token to Auth header
       setAuthToken(token);
       console.log("checking API data", result.data)
@@ -86,27 +87,8 @@ export const loginUser = (userData,adminstatus) => dispatch => {
       var link=''
       console.log("usertype", usertype)
       dispatch(setCurrentUser(decoded, status, cart,notLoggedInMessage, link, usertype));
-        }
-        else {
-         const status="You are not logged in ."
-         const usertype=''
-        const cart = []
-         dispatch(setCurrentUser(decoded, status, cart,notLoggedInMessage, link, usertype));
-        }}
-        else {
-          localStorage.setItem("jwtToken", token);
-          // Set token to Auth header
-          setAuthToken(token);
-          var cart = JSON.stringify(result.data.cart)
-          const usertype=result.data.usertype
-          const status=`you are logged in as ${decoded.name}`
-          localStorage.setItem("cartContents", cart)
-          cart = JSON.parse(cart)
-          localStorage.setItem("loginStatus", status)
-          var notLoggedInMessage=''
-          var link=''
-          dispatch(setCurrentUser(decoded, status, cart,notLoggedInMessage, link, usertype));
-        }
+        
+    
     })
       // Set current user
       
@@ -121,6 +103,7 @@ export const loginUser = (userData,adminstatus) => dispatch => {
 // Set logged in user
 export const setCurrentUser = ( decoded, status, cart, notLoggedInMessage, link,usertype) => {
  if (status==="You are not logged in. "){
+  localStorage.removeItem("logging out");
   localStorage.removeItem("jwtToken");
   localStorage.removeItem("cartContents")
   localStorage.removeItem("loginStatus")
@@ -167,6 +150,8 @@ export const logoutUser = () => dispatch => {
   var notLoggedInMessage = "You must log in to view your cart."
   var link = <Link className="nav-link" to="/login">Login Now</Link>
   var usertype=''
+
+
   // Set current user to empty object {} which will set isAuthenticated to false
   dispatch(setCurrentUser(decoded, status, cart, notLoggedInMessage, link));
 };

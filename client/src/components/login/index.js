@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loginUser,logoutUser } from "./../../actions/authActions";
 import classnames from "classnames";
+import { confirmAlert} from 'react-confirm-alert'; // Import
+
 class Login extends Component {
   constructor() {
     super();
@@ -18,12 +20,30 @@ class Login extends Component {
     if (this.props.admin) {
     console.log("properties on login page",this.props)
     if (this.props.auth.isAuthenticated) {
+      const usertype = localStorage.getItem("usertype")
+      if (usertype === "admin"){
+      
       this.props.history.push("/admin");
     }
-  }
+    else {
+      confirmAlert({
+        title: 'Restricted',
+        message: 'you are not registered as an admin, you will need to logout and log back in as an admin',
+        buttons: [
+          {
+            label: 'Ok',
+            onClick: () => {
+              this.props.history.push("/plants")
+              }
+          }
+        ]
+      });
+    }
+  }}
   else {
     if (this.props.auth.isAuthenticated) {
       alert("you are already logged in!!")
+      this.props.history.push("/plants")
     }
   }
 }
@@ -43,12 +63,25 @@ if (nextProps.errors) {
     else {
 
         console.log("usertype",nextProps.auth.usertype  )
+      alert ("test",nextProps.auth.usertype)
         if (nextProps.auth.usertype==="admin"){
             this.props.history.push("/admin")
         }
         else {
-            alert("you are not registered to be an admin")
-            this.props.history.push("/")
+          confirmAlert({
+            title: 'Restricted',
+            message: 'you are not registered as an admin',
+            buttons: [
+              {
+                label: 'Ok',
+                onClick: () => {
+                  this.props.history.push("/plants")
+                  }
+              }
+            ]
+          });
+       
+            this.props.history.push("/plants")
             this.props.logoutUser()
         }
 

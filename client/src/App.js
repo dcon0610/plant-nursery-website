@@ -18,6 +18,7 @@ import { setCurrentUser, logoutUser } from "./actions/authActions"
 import { getPlants } from "./actions/PlantsActions";
 import "./app.css"
 
+
 // Check for token to keep user logged in
 store.dispatch(getPlants())
 if (localStorage.jwtToken) {

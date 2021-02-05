@@ -7,7 +7,7 @@ function linkCard (props) {
   
   return(
     
-    <div className="col">
+    <div className="col-4 text-center">
         <div className="card">
         <Link to ={props.linkUrl}>
         <img className="card-img-top" src={props.picture} alt="Card image cap"></img>

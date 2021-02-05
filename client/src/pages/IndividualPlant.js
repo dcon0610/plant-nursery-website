@@ -33,22 +33,25 @@ class IndividualPlant extends React.Component {
         console.log("returned plants",res.data)
         var plants = res.data
           console.log(plants[0])
-        const currentPath = this.props.location.pathname.split("/").pop()
-        
-          let index = this.props.plants.plants.findIndex( element => {
-            if (element.name === currentPath) {
-              return true;
-            }
-          });
-         
+        const currentPath = (this.props.location.pathname.split("/").pop()).replace(/%20/g, " ")
+        console.log(currentPath, plants[1].name)
+        let index = plants.findIndex( element => {
+          if (element.name === currentPath) {
+            return true;
+          }
+        });
+         console.log("index,", index)
           this.setState({url: res.data[index].url})
+          this.setState({name: res.data[index].name})
+          this.setState({description: res.data[index].description})
+          this.setState({cost: res.data[index].cost})
     
       })
      
 
       }
       else {
-      const currentPath = this.props.location.pathname.split("/").pop()
+      const currentPath = (this.props.location.pathname.split("/").pop()).replace(/%20/g, " ")
         let index = this.props.plants.plants.findIndex( element => {
             if (element.name === currentPath) {
               return true;
@@ -58,6 +61,9 @@ class IndividualPlant extends React.Component {
           console.log(currentPath)
           console.log(index)
         this.setState({url: this.props.plants.plants[index].url})
+        this.setState({name: this.props.plants.plants[index].name})
+        this.setState({description: this.props.plants.plants[index].description})
+        this.setState({cost: this.props.plants.plants[index].cost})
 
         } 
     }
@@ -71,7 +77,8 @@ class IndividualPlant extends React.Component {
     addToCart = () => {
 
         //add plant name, quantity, user to state in cart and send to database via an API call. 
-        if (this.props.auth.decoded === undefined) {
+        console.log("auth",this.props.auth.decoded)
+        if (this.props.auth.decoded === undefined || this.props.auth.decoded === "") {
           confirmAlert({
             title: ' Login',
             message: 'You must login to add to cart',
@@ -99,7 +106,7 @@ class IndividualPlant extends React.Component {
                 user: this.props.auth.decoded.id,
                 name: this.props.match.params.id,
                 number: this.state.quantity,
-                cost: this.props.location.data.cost
+                cost: this.state.cost
             }).then(results => {
                 console.log(results)
                 this.props.updateCart(this.props.auth.decoded.id)
@@ -140,28 +147,23 @@ render() {
             </div>
             <div className="col">
                 <div className="card-block px-2">
-                    <h4 className="card-title">Title</h4>
-                    <h5 className="card-title">sub Title</h5>
-                    <p>Price</p>
+                    <h4 className="card-title">{this.state.name}</h4>
+                   
+                    <p>Price: ${this.state.cost}</p>
                     <div className="row">
                         <div className="col-6"><span className="padding-right">Quantity: </span><input default={1} type="Number" onChange={this.handleInputChange} placeholder="1"></input></div>
                         <div className="col-6 text-large"><button disabled={!this.state.name} onClick={this.addToCart} className="padding-cart">Add to Cart: <FontAwesomeIcon icon={faShoppingCart} /> </button></div>
                     </div>
                     <br></br>
                     <br></br>
-                    <p className="card-text">Description Description Description Description 
-                    Description Description Description Description Description Description Description Description Description 
-                    Description Description Description Description Description Description Description Description Description 
-                    Description Description Description Description Description </p>
+                    <p className="card-text">{this.state.description} </p>
                    <p></p>
                    <Link className="bottom-right" to="/plants">Go Back</Link>
                 </div>
                 
             </div>
         </div>
-        <div className="card-footer w-100 text-muted">
-            Footer stating cats are best flat. 
-        </div>
+       
   </div>
     </div>
 

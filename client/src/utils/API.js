@@ -29,7 +29,18 @@ export default {
 
   addPlant: function(userdata) {
     return axios.post("/api/plants/addplant", userdata)
+  },
+
+  deletePlant: function(userdata) {
+    return axios.post("/api/plants/deleteplant", userdata)
+  },
+  deactivate: function(userdata) {
+    return axios.post("/api/plants/deactivateplant", userdata)
+  },
+  reactivate: function(userdata) {
+    return axios.post("/api/plants/reactivateplant", userdata)
   }
+
 
   // // Gets the post with the given id
   // getPost: function(id) {

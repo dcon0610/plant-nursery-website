@@ -4,8 +4,11 @@ const Schema = mongoose.Schema;
 // define User Schema
 const plant = new Schema({
      name: {type: String, required: true},
-   height : {type: Number, required: true},
-   cost: {type: Number, required: true}
+   id : {type: Number, required: true},
+   cost: {type: Number, required: true},
+   description: {type: String},
+   url: {type: String},
+   show: {type: Boolean, required: true, default: true}
 });
 
 // define model
