@@ -16,7 +16,7 @@ function footer() {
 
 
   return (
-    <footer className="bg-light text-center text-lg-start fixed-bottom ">
+    <footer className="bg-light text-center text-lg-start fixed-bottom hide">
   <div className="container p-4">
 
     <div className="row">

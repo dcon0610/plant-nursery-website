@@ -73,6 +73,7 @@ render() {
     <Dropdown.Item > <Link className="nav-link" to="/login">Login</Link></Dropdown.Item>
     <Dropdown.Item > <Link className="nav-link" to="/register">Register</Link></Dropdown.Item>
     <Dropdown.Item > <Link className="nav-link" onClick={this.logout}>Logout</Link></Dropdown.Item>
+    <Dropdown.Item > <Link className="nav-link" to="/adminlogin">admin</Link></Dropdown.Item>
   </Dropdown.Menu>
 </Dropdown>
 </div>

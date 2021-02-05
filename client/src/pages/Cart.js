@@ -22,10 +22,12 @@ async componentDidMount () {
     // Get a client token for authorization from your server
     const response = await axios.get(
       "/api/braintree/v1/getToken"
-    )
-    const clientToken = response.data.clientToken
+    ).then((response) =>{
+      const clientToken = response.data.clientToken
 
-    this.setState({ clientToken })
+      this.setState({ clientToken: clientToken })
+      console.log("test",this.props.auth)
+    } )
   } catch (err) {
     console.error(err)
   }
@@ -60,10 +62,12 @@ async buy() {
         else {
   return (
     <div className="container">
-      <div> {this.props.auth.status}{this.props.auth.notLoggedIn}{this.props.auth.link}</div>
+     {!this.props.auth.isAuthenticated && <div><p>You are not logged in. Please log in to view your cart.</p>
+       <Link to="login">Login now</Link>
+       </div>}
       
-
-    <table className="table table-striped">
+      <div class="table-responsive">
+    <table className="table table-striped" style={{width: "100%"}}>
     <thead>
       <tr>
        
@@ -103,6 +107,7 @@ async buy() {
     </tr>
     </tbody>
   </table>
+  </div>
   </div>
   )
   }}
