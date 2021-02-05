@@ -1,6 +1,6 @@
 
-var express= require("express")
-var router = express.Router();
+const express= require("express")
+const router = express.Router();
 const getPlants = require('../controllers');
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -17,10 +17,7 @@ var gateway = new braintree.BraintreeGateway({
   publicKey: 'bpyzwwcxj6zmx5kq',
   privateKey: '50b5df6afdd9cdec64b2c491f3129c99'
 }); 
-router.use(function(req, res) {
-res.sendFile(path.join(__dirname, "../client/build/index.html"))
 
-})
 
   router.get("/braintree", function(req, res) {
     res.send("Braintree route is healthy")
@@ -162,5 +159,10 @@ router.post("/api/users/login", (req, res) => {
   router.post("/api/plants/deactivateplant", getPlants.deactivatePlant)
 
   router.post("/api/plants/reactivateplant", getPlants.activatePlant)
+
+  router.use(function(req, res) {
+    res.sendFile(path.join(__dirname, "../client/build/index.html"))
+    
+    })
  
 module.exports = router;
