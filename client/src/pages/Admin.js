@@ -171,7 +171,7 @@ const show = (event) => {
             <div className='custom-ui'>
               <h1>Confirm Plant Details</h1>
               <p>plant name: {plantName}</p>
-              <p>flower colour: {description}</p>
+              <p>flower col-mdour: {description}</p>
               <p>cost: {cost}</p>
               <p>flower season: {flowerSeason}</p>
               <p>photoName: {url}</p>
@@ -351,9 +351,9 @@ const reActivatePlant = () => {
       {showAddPlantState && <div> 
         <form onSubmit={e => { handleSubmit(e) }}>
         <div className="row mt-2">
-        <label className="col-3">Plant Name:</label>
+        <label className="col-md-3">Plant Name:</label>
         <br />
-        <input className="col-3"
+        <input className="col-md-3"
           name='plantName' 
           type='text'
           value={plantName}
@@ -361,9 +361,9 @@ const reActivatePlant = () => {
         />
         </div>
         <div className="row mt-2">
-        <label className="col-3">Description:</label>
+        <label className="col-md-3">Description:</label>
         <br />
-        <input className="col-3"
+        <input className="col-md-3"
           name='description' 
           type='text'
           value={description}
@@ -371,9 +371,9 @@ const reActivatePlant = () => {
         />
         </div>
         <div className="row mt-2">
-        <label className="col-3">Cost:</label>
+        <label className="col-md-3">Cost:</label>
         <br />
-        <input className="col-3"
+        <input className="col-md-3"
           name='cost' 
           type='number'
           value={cost}
@@ -381,9 +381,9 @@ const reActivatePlant = () => {
         />
         </div>
         <div className="row mt-2">
-        <label className="col-3">Name of Photo in public folder:</label>
+        <label className="col-md-3">Name of Photo in public folder:</label>
         <br />
-        <input className="col-3"
+        <input className="col-md-3"
           name='url' 
           type='text'
           value={url}
@@ -391,7 +391,7 @@ const reActivatePlant = () => {
         />
         </div>
         <div className="row mt-2">
-        <label className="col-3">Flower Season:</label>
+        <label className="col-md-3">Flower Season:</label>
         <br />
         <select value={flowerSeason} onChange={e => setFlowerSeason(e.target.value)}>
             <option value="summer">summer</option>
@@ -410,10 +410,10 @@ const reActivatePlant = () => {
       <button id="deletePlant" onClick={show} className="row mt-4"style={{width:"100%", fontSize:"large"}}>Click here to remove a plant</button>
       {showDeletePlantState && <div>
       <div className="row mt-2">
-        <label className="col-5 text-center my-auto"><h5>Select Plants to Remove from Sale:</h5></label>
+        <label className="col-md-5 text-center my-auto"><h5>Select Plants to Remove from Sale:</h5></label>
         <br />
-        <Select className="col-4" options={options} isMulti  onChange={handleUpdate}/>
-        <input className="col-2" 
+        <Select className="col-md-4" options={options} isMulti  onChange={handleUpdate}/>
+        <input className="col-md-2" 
           type='submit' 
           value='Remove Plant' 
           onClick={removePlant}
@@ -425,10 +425,10 @@ const reActivatePlant = () => {
         <button id="deactivatePlant" onClick={show} className="row mt-4"style={{width:"100%", fontSize:"large"}}>Click here to deactivate plants</button>
       {showDeactivateState && <div>
       <div className="row mt-2">
-        <label className="col-5 text-center my-auto"><h5>Select Plants to Deactivate:</h5></label>
+        <label className="col-md-5 text-center my-auto"><h5>Select Plants to Deactivate:</h5></label>
         <br />
-        <Select className="col-4" options={options} isMulti  onChange={handleUpdate}/>
-        <input className="col-2" 
+        <Select className="col-md-4" options={options} isMulti  onChange={handleUpdate}/>
+        <input className="col-md-2" 
           type='submit' 
           value='Deactivate' 
           onClick={deactivatePlant}
@@ -440,10 +440,10 @@ const reActivatePlant = () => {
         <button id="activatePlant" onClick={show} className="row mt-4"style={{width:"100%", fontSize:"large"}}>Click here to reactivate plants</button>
       {showActivateState && <div>
       <div className="row mt-2">
-        <label className="col-5 text-center my-auto"><h5>Select Plants to reactivate:</h5></label>
+        <label className="col-md-5 text-center my-auto"><h5>Select Plants to reactivate:</h5></label>
         <br />
-        <Select className="col-4" options={inactiveOptions} isMulti  onChange={handleUpdate}/>
-        <input className="col-2" 
+        <Select className="col-md-4" options={inactiveOptions} isMulti  onChange={handleUpdate}/>
+        <input className="col-md-2" 
           type='submit' 
           value='reactivate' 
           onClick={reActivatePlant}
